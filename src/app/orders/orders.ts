@@ -2,27 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, NgForOf, NgIf, CurrencyPipe, DatePipe } from '@angular/common';
 import { Orders } from '../api/services/orders/orders.model';
 import { OrdersService } from '../api/services/orders/orders.service';
+import { NewOrderModalComponent } from './new-orders-modal/new-orders-modal';
 
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.html',
   styleUrls: ['./orders.css'],
   standalone: true,
-  imports: [CommonModule, NgForOf, NgIf, CurrencyPipe, DatePipe]
+  imports: [CommonModule, NgForOf, NgIf, CurrencyPipe, DatePipe, NewOrderModalComponent]
 })
 
 export class OrdersComponent implements OnInit {
   orders: Orders[] = [];
   loading = true;
   error = '';
+  showNewOrderModal = false;
 
   constructor(private ordersService: OrdersService) { }
 
   ngOnInit() {
+    this.loadOrders();
+  }
+
+  loadOrders() {
     this.ordersService.getOrders().subscribe({
       next: (data) => {
         this.orders = data;
-        console.log('Dados recebidos:', data);
         this.loading = false;
       },
       error: (err) => {
@@ -31,6 +36,18 @@ export class OrdersComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  openNewOrderModal() {
+    this.showNewOrderModal = true;
+  }
+
+  closeNewOrderModal() {
+    this.showNewOrderModal = false;
+  }
+
+  addNewOrder(order: Orders) {
+    this.orders = [order, ...this.orders];
   }
 
   updateOrderStatus(order: Orders, status: Orders['status']) {
@@ -47,3 +64,4 @@ export class OrdersComponent implements OnInit {
     });
   }
 }
+
