@@ -29,22 +29,29 @@ export class OrdersComponent implements OnInit {
 
   loadOrders() {
     this.loading = true;
-
     this.ordersService.getOrders().subscribe({
       next: (data) => {
         this.orders = [...data];
         this.loading = false;
+        this.cdr.detectChanges();
       },
       error: (err: HttpErrorResponse) => {
         this.loading = false;
 
         if (err.status === 401) {
           this.error = 'Você não tem permissão para acessar esta lista de pedidos.';
-          return;
+        } else if (err.status === 0) {
+          this.error = 'Não foi possível conectar ao servidor.';
+        } else {
+          this.error = 'Erro ao carregar pedidos: ' + err.message;
         }
+
+        console.error('Erro na requisição:', err);
+        this.cdr.detectChanges();
       }
     });
   }
+
   openNewOrderModal() {
     this.showNewOrderModal = true;
   }

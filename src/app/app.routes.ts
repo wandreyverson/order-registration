@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrdersComponent } from './orders/orders';
-import { Login } from './login/login';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginComponent } from './login/login';
 
 export  const routes: Routes = [
-  { path: '', component: Login },
+  { path: '', component: LoginComponent },
   { path: 'orders', component: OrdersComponent },
   { path: '**', redirectTo: '' }             
 ];
