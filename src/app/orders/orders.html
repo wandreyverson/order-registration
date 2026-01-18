@@ -1,61 +1,61 @@
-<div class="orders-container">
+<div *ngIf="error" class="error">{{ error }}</div>
+<div *ngIf="!loading && !error" class="orders-container">
     <h2>Lista de Pedidos</h2>
-  
+
     <!-- Botão Novo Pedido -->
     <button class="new-order-btn" (click)="openNewOrderModal()">
-      + Novo Pedido
+        + Novo Pedido
     </button>
-  
+
     <div *ngIf="loading">Carregando pedidos...</div>
-    <div *ngIf="error" class="error">{{ error }}</div>
-  
+
+
     <table *ngIf="!loading && !error" class="orders-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Cliente</th>
-          <th>Itens</th>
-          <th>Total do Pedido</th>
-          <th>Status</th>
-          <th>Data de Criação</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let order of orders">
-          <td>{{ order.id }}</td>
-          <td>{{ order.client }}</td>
-  
-          <td>
-            <ul class="items-list">
-              <li *ngFor="let item of order.items || []">
-                {{ item.product }} - {{ item.quantity }} x {{ item.price | currency:'BRL' }}
-              </li>
-            </ul>
-          </td>
-  
-          <td>{{ order.total | currency:'BRL' }}</td>
-  
-          <td [ngClass]="{
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Itens</th>
+                <th>Total do Pedido</th>
+                <th>Status</th>
+                <th>Data de Criação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <td>{{ order.id }}</td>
+                <td>{{ order.client }}</td>
+
+                <td>
+                    <ul class="items-list">
+                        <li *ngFor="let item of order.items || []">
+                            {{ item.product }} - {{ item.quantity }} x {{ item.price | currency:'BRL' }}
+                        </li>
+                    </ul>
+                </td>
+
+                <td>{{ order.total | currency:'BRL' }}</td>
+
+                <td [ngClass]="{
             'status-pendente': order.status === 'PENDENTE',
             'status-entregue': order.status === 'ENTREGUE'
           }">
-            {{ order.status }}
-          </td>
-  
-          <td>{{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
-  
-          <td>
-            <button class="action-btn" (click)="updateOrderStatus(order, 'ENTREGUE')"
-              [disabled]="order.status === 'ENTREGUE'">
-              Pedido Entregue
-            </button>
-          </td>
-        </tr>
-      </tbody>
+                    {{ order.status }}
+                </td>
+
+                <td>{{ order.createdAt | date:'dd/MM/yyyy HH:mm' }}</td>
+
+                <td>
+                    <button class="action-btn" (click)="updateOrderStatus(order, 'ENTREGUE')"
+                        [disabled]="order.status === 'ENTREGUE'">
+                        Pedido Entregue
+                    </button>
+                </td>
+            </tr>
+        </tbody>
     </table>
-  
+
     <app-new-order-modal *ngIf="showNewOrderModal" (close)="closeNewOrderModal()" (orderCreated)="addNewOrder($event)">
     </app-new-order-modal>
-  </div>
-  
+</div>

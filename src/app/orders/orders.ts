@@ -3,6 +3,7 @@ import { CommonModule, NgForOf, NgIf, CurrencyPipe, DatePipe } from '@angular/co
 import { Orders } from '../api/services/orders/orders.model';
 import { OrdersService } from '../api/services/orders/orders.service';
 import { NewOrderModalComponent } from './new-orders-modal/new-orders-modal';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-orders',
@@ -28,21 +29,22 @@ export class OrdersComponent implements OnInit {
 
   loadOrders() {
     this.loading = true;
+
     this.ordersService.getOrders().subscribe({
       next: (data) => {
         this.orders = [...data];
         this.loading = false;
-        this.cdr.detectChanges();
       },
-      error: (err) => {
-        console.error(err);
-        this.error = 'Erro ao carregar pedidos';
+      error: (err: HttpErrorResponse) => {
         this.loading = false;
-        this.cdr.detectChanges();
+
+        if (err.status === 401) {
+          this.error = 'Você não tem permissão para acessar esta lista de pedidos.';
+          return;
+        }
       }
     });
   }
-
   openNewOrderModal() {
     this.showNewOrderModal = true;
   }
