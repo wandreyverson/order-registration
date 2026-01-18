@@ -1,59 +1,134 @@
-# OrderRegistration
+# Order Registration – Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.1.0.
+Aplicação **Angular (SPA)** para gerenciamento de pedidos de clientes.
+Este frontend consome uma **API Node.js** para autenticação e persistência de dados, permitindo **login**, **criação**, **listagem**, **filtro** e **atualização de pedidos**.
 
-## Development server
+---
 
-To start a local development server, run:
+## ✨ Funcionalidades
+
+* **Autenticação de Usuário**
+
+  * Tela de login integrada à API
+  * Token JWT armazenado no `localStorage`
+* **Dashboard de Pedidos**
+
+  * Listagem completa de pedidos
+  * Exibição de ID, cliente, itens, valor total, status e data de criação
+* **Criação de Novos Pedidos**
+
+  * Modal para cadastro de pedidos
+  * Inclusão dinâmica de produtos (nome, quantidade e preço)
+* **Atualização de Status**
+
+  * Alteração do status do pedido (ex: `PENDENTE` → `ENTREGUE`)
+* **Filtro por Status**
+
+  * Filtro da listagem por status do pedido
+
+---
+
+## 🛠️ Stack Tecnológica
+
+* **Framework**: Angular
+* **Linguagem**: TypeScript
+* **Comunicação HTTP**: Angular `HttpClient`
+* **Roteamento**: Angular Router
+* **Gerenciamento de Estado Simples**: Services + localStorage
+
+---
+
+## 📋 Pré-requisitos
+
+Antes de rodar o projeto, certifique-se de ter:
+
+* **Node.js** (versão 16 ou superior)
+* **npm**
+* **Angular CLI**
+* **Backend rodando localmente**
+
+### Backend esperado
+
+A aplicação espera que a API esteja disponível em:
+
+http://localhost:3000
+
+Endpoints utilizados:
+
+* Autenticação:
+
+  ```
+  POST /api/auth/login
+  ```
+* Pedidos:
+
+  ```
+  GET    /api/orders
+  POST   /api/orders
+  PATCH  /api/orders/:id/status
+  ```
+
+> ⚠️ O frontend **não funciona sem o backend** configurado corretamente.
+
+---
+
+## 🚀 Como rodar o projeto
+
+### 1️⃣ Clonar o repositório
+
+```bash
+git clone https://github.com/wandreyverson/order-registration.git
+cd order-registration
+```
+
+### 2️⃣ Instalar dependências
+
+```bash
+npm install
+```
+
+---
+
+## ▶️ Servidor de desenvolvimento
+
+Para iniciar o projeto em modo de desenvolvimento:
+
+```bash
+npm start
+```
+
+ou
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+A aplicação ficará disponível em:
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```
+http://localhost:4200
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+O navegador será atualizado automaticamente a cada alteração no código.
 
-```bash
-ng generate --help
-```
+---
 
-## Building
+## 📦 Scripts disponíveis
 
-To build the project run:
+| Comando         | Descrição                                  |
+| --------------- | ------------------------------------------ |
+| `npm start`     | Inicia a aplicação em modo desenvolvimento |
+| `npm run build` | Gera o build de produção na pasta `dist/`  |
+| `npm test`      | Executa os testes unitários com Vitest     |
 
-```bash
-ng build
-```
+---
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🔐 Autenticação
 
-## Running unit tests
+* O token JWT retornado pela API é salvo no `localStorage`
+* As requisições HTTP utilizam o header:
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+  ```
+  Authorization: Bearer <token>
+  ```
+* Caso o token seja inválido ou expirado, a API retorna **401 (Unauthorized)** e o frontend exibe uma mensagem amigável
