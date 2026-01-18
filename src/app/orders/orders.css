@@ -1,57 +1,68 @@
 .orders-container {
+    max-width: 1200px;
+    margin: 20px auto;
     padding: 20px;
-    font-family: Arial, sans-serif;
-}
-
-.orders-container h2 {
-    text-align: center;
-    margin-bottom: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .orders-table {
     width: 100%;
     border-collapse: collapse;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
 }
 
 .orders-table th,
 .orders-table td {
-    padding: 12px 15px;
+    padding: 12px;
     border: 1px solid #ddd;
     text-align: left;
 }
 
-.orders-table th {
-    background-color: #007BFF;
-    color: white;
-    text-transform: uppercase;
-    font-size: 14px;
-}
-
-.orders-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-.orders-table tr:hover {
-    background-color: #f1f1f1;
-}
-
 .items-list {
-    list-style: none;
-    padding: 0;
+    padding-left: 15px;
     margin: 0;
 }
 
-.items-list li {
-    margin-bottom: 4px;
-}
-
 .status-pendente {
-    color: #FF8C00;
+    color: orange;
     font-weight: bold;
 }
 
 .status-processado {
-    color: #28A745;
+    color: blue;
     font-weight: bold;
+}
+
+.status-entregue {
+    color: green;
+    font-weight: bold;
+}
+
+.status-cancelado {
+    color: red;
+    font-weight: bold;
+}
+
+.action-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #ffffff;
+    padding: 7px;
+    transition: color 0.2s;
+    background: #1976d2;
+    border-radius: 10px;
+}
+
+.action-btn:hover {
+    background: #60d144;
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #1976d2;
 }

@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  standalone: true, // <--- indica que é standalone
-  imports: [RouterOutlet, CommonModule, FormsModule], // <--- adiciona CommonModule e FormsModule
+  standalone: true,
+  imports: [CommonModule, FormsModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
@@ -15,7 +15,7 @@ export class Login {
   password = '';
   errorMessage = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   onSubmit() {
     if (this.username === 'admin' && this.password === '1234') {
